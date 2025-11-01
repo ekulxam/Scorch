@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " # ",
+    "# #",
+    " # "
+  ],
+  "key": {
+    "#": "scorch:ironstone_slab"
+  },
+  "result": {
+    "id": "scorch:burial_urn",
+    "count": 1
+  }
+}

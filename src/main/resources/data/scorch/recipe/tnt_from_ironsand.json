@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "X#X",
+    "#X#",
+    "X#X"
+  ],
+  "key": {
+    "#": "scorch:ironsand",
+    "X": "minecraft:gunpowder"
+  },
+  "result": {
+    "id": "minecraft:tnt",
+    "count": 1
+  }
+}

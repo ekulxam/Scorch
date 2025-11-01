@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:golden_apple"
+    },
+    "title": {
+      "translate": "advancements.nether.cure_curse.title"
+    },
+    "description": {
+      "translate": "advancements.nether.cure_curse.description"
+    }
+  },
+  "parent": "minecraft:nether/find_crypt",
+  "criteria": {
+    "ignite_pyrack": {
+      "trigger": "scorch:cure_curse"
+    }
+  },
+  "requirements": [
+    [
+      "ignite_pyrack"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

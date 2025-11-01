@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "ingredient": "scorch:ironsand",
+  "result": {
+    "id": "minecraft:glass"
+  }
+}

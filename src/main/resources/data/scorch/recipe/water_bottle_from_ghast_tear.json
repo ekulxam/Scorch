@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    [
+      "minecraft:ghast_tear"
+    ],
+    [
+      "minecraft:glass_bottle"
+    ]
+  ],
+  "result": {
+    "id": "minecraft:potion",
+    "components": {
+      "minecraft:potion_contents": "minecraft:water"
+    }
+  }
+}

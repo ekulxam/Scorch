@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "scorch:pyrack",
+    "scorch:ignistone",
+    "scorch:ironstone",
+    "scorch:ironstone_slab",
+    "scorch:ironstone_stairs",
+    "scorch:ironstone_wall",
+    "scorch:chiseled_ironstone",
+    "scorch:possessed_chiseled_ironstone"
+  ]
+}

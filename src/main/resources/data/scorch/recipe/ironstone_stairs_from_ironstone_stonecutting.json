@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "scorch:ironstone",
+  "result": {
+    "count": 1,
+    "id": "scorch:ironstone_stairs"
+  }
+}

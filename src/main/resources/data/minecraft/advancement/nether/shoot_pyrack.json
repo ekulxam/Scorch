@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": {
+      "id": "scorch:pyrack"
+    },
+    "title": {
+      "translate": "advancements.nether.shoot_pyrack.title"
+    },
+    "description": {
+      "translate": "advancements.nether.shoot_pyrack.description"
+    }
+  },
+  "parent": "minecraft:nether/ignite_pyrack",
+  "criteria": {
+    "ignite_pyrack": {
+      "trigger": "scorch:shoot_block"
+    }
+  },
+  "requirements": [
+    [
+      "ignite_pyrack"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

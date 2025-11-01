@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "scorch:block/ironstone",
+    "side": "scorch:block/ironstone",
+    "top": "scorch:block/ironstone"
+  }
+}

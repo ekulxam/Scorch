@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "scorch:debris_structure",
+      "weight": 4
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 3,
+    "separation": 2,
+    "salt": 123456789
+  }
+}

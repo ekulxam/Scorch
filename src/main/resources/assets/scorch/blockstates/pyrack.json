@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "activated=false": {
+      "model": "scorch:block/pyrack"
+    },
+    "activated=true": {
+      "model": "scorch:block/pyrack_ignited"
+    }
+  }
+}

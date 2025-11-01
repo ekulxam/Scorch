@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": "scorch:ironstone"
+  },
+  "result": {
+    "id": "scorch:ironstone_stairs",
+    "count": 4
+  }
+}

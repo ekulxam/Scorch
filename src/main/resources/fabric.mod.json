@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "scorch",
+	"version": "${version}",
+	"name": "Scorch",
+	"description": "New balanced content for the Nether",
+	"authors": [
+		"Astrazoey"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": ""
+	},
+	"license": "MIT",
+	"icon": "assets/scorch/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"astrazoey.scorch.Scorch"
+		],
+		"client": [
+			"astrazoey.scorch.ScorchClient"
+		],
+        "fabric-datagen" : [
+          "astrazoey.scorch.ScorchDataGenerator"
+        ]
+	},
+	"mixins": [
+		"scorch.mixins.json",
+		{
+			"config": "scorch.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.17.3",
+		"minecraft": "~1.21.10",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

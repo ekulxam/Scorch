@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": "scorch:ironstone"
+  },
+  "result": {
+    "id": "scorch:ironstone_slab",
+    "count": 6
+  }
+}

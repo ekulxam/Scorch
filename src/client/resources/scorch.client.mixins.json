@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "astrazoey.scorch.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "CurseFogMixin",
+    "CustomHeartMixin",
+    "NetherFogMixin",
+    "StriderEntityRendererMixin",
+    "StriderEntityRenderStateMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

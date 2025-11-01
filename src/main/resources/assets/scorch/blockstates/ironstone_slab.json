@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "scorch:block/ironstone_slab"
+    },
+    "type=double": {
+      "model": "scorch:block/ironstone"
+    },
+    "type=top": {
+      "model": "scorch:block/ironstone_slab_top"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": "minecraft:ghast_tear",
+    "X": "scorch:chiseled_ironstone"
+  },
+  "result": {
+    "id": "scorch:possessed_chiseled_ironstone",
+    "count": 1
+  }
+}

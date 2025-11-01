@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "activated=false": {
+      "model": "scorch:block/chiseled_ironstone"
+    },
+    "activated=true": {
+      "model": "scorch:block/possessed_chiseled_ironstone"
+    }
+  }
+}

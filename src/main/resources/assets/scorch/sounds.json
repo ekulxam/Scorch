@@ -1,0 +1,50 @@
+{
+  "ignistone_drops_lava": {
+    "subtitle": "sound.scorch.ignistone_drops_lava",
+    "sounds": [
+      "scorch:ignistone_drops_lava"
+    ]
+  },
+  "pyrack_ignites": {
+    "subtitle": "sound.scorch.pyrack_ignites",
+    "sounds": [
+      "scorch:pyrack_ignites"
+    ]
+  },
+  "curse_first_time": {
+    "subtitle": "sound.scorch.curse_first_time",
+    "sounds": [
+      "scorch:curse_first_time"
+    ]
+  },
+  "curse": {
+    "subtitle": "sound.scorch.curse",
+    "sounds": [
+      "scorch:curse"
+    ]
+  },
+  "curse_on_break": {
+    "subtitle": "sound.scorch.curse_on_break",
+    "sounds": [
+      "scorch:curse_on_break"
+    ]
+  },
+  "apply_magma": {
+    "subtitle": "sound.scorch.apply_magma",
+    "sounds": [
+      "scorch:apply_magma"
+    ]
+  },
+  "return": {
+    "subtitle": "sound.scorch.return",
+    "sounds": [
+      "scorch:return"
+    ]
+  },
+  "shear_strider": {
+    "subtitle": "sound.scorch.shear_strider",
+    "sounds": [
+      "scorch:shear_strider"
+    ]
+  }
+}

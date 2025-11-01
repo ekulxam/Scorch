@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": {
+      "id": "scorch:returning_totem"
+    },
+    "title": {
+      "translate": "advancements.nether.use_returning_totem.title"
+    },
+    "description": {
+      "translate": "advancements.nether.use_returning_totem.description"
+    }
+  },
+  "parent": "minecraft:nether/find_crypt",
+  "criteria": {
+    "ignite_pyrack": {
+      "trigger": "scorch:use_returning_totem"
+    }
+  },
+  "requirements": [
+    [
+      "ignite_pyrack"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

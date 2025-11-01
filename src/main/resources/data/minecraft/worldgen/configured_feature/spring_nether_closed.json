@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:spring_feature",
+  "config": {
+    "hole_count": 10,
+    "requires_block_below": true,
+    "rock_count": 10,
+    "state": {
+      "Name": "minecraft:lava",
+      "Properties": {
+        "falling": "true"
+      }
+    },
+    "valid_blocks": [
+      "minecraft:barrier"
+    ]
+  }
+}

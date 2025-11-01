@@ -1,0 +1,73 @@
+Implemented Features:
+
+World Generation
+    - Gravel replaced by ironsand
+    - Build height increased
+    - Nether is slightly higher and slightly deeper
+    - Annoying lava deposits no longer exist underground
+
+Pyrack
+    - New ore that drops gunpowder
+    - Can be ignited for chain reaction explosions
+    - Great for searching for debris underground
+
+Ignistone
+    - Found deep underground near large deposits of ancient debris
+    - Turns into lava if mined without silk touch
+
+Crying Obsidian
+    - Creates ignistone when placed above a lava source
+    - Creates netherrack when placed above flowing lava
+
+Ironsand & Ironstone
+    - New nether blockset
+    - Mining ironsand will give ironsand clumps or flint
+    - Ironsand clumps can be smelted into iron nuggets
+    - Ironsand clumps can be crafted back into ironsand
+    - Ironsand can be crafted into ironstone
+    - Ironsand be used to smelt glass
+    - Ironsand be used to craft TNT
+    - Ironstone comes with slab, stair, chiseled, and wall variants
+    - Ironstone can also be crafted into burial urns, but the burial urns will not contain anything
+
+Crypts
+    - New structure made of Ironstone that spawns deep underground
+    - Inhabited by wither skeletons
+    - Lots of loot inside, especially if you break the Burial Urns or dig up graves
+    - You can find Totems of Returning here
+    - Being caught disturbing the crypt by Possessed Ironstone will cause the player to build up a curse
+    - Curse build up will awaken more of the crypt and reduce your maximum HP
+    - Curse build up persists beyond death, but it will go away after some time or when a golden apple is eaten
+    - You can craft Possessed Ironstone using ghast tears
+
+Totem of Returning
+    - Totems of Returning are a one-time use item which will safely teleport you to your spawn point when used
+    - Can be found in Burial Urns in Crypts
+
+Striders
+ - Striders can be sheared for string
+ - Strider hair can be styled with magma cream
+ - Striders will grow their hair back over time but this process can be accelerated using warped roots
+ - Striders will not grow their hair back if they are cold
+
+Misc
+    - Wither Skull and Nether Star item entities are immune to fire and lava
+    - Wither Skeletons have a 100% chance to drop a Wither Skull if killed by a ghast fireball
+    - Piglins give ironsand instead of gravel
+    - Water Bottles are craftable by adding a glass bottle and a ghast tear in the crafting menu
+
+Advancements
+    - Igniting Pyrack
+    - Igniting Pyrack with a flaming arrow
+    - Finding a Crypt
+    - Finding an Ignistone deposit
+    - Killing a wither skeleton with a fireball
+    - Alleviating curse build up
+    - Use returning totem
+    - Shearing a strider
+    - Styling a strider
+
+
+Credits
+Textures:
+    - Broken heart texture made by Snake Block

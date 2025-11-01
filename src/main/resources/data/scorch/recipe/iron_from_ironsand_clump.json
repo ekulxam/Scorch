@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "ingredient": "scorch:ironsand_clump",
+  "result": {
+    "id": "minecraft:iron_nugget"
+  }
+}

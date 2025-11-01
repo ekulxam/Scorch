@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:shears"
+    },
+    "title": {
+      "translate": "advancements.nether.shear_strider.title"
+    },
+    "description": {
+      "translate": "advancements.nether.shear_strider.description"
+    }
+  },
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "ignite_pyrack": {
+      "trigger": "scorch:shear_strider"
+    }
+  },
+  "requirements": [
+    [
+      "ignite_pyrack"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

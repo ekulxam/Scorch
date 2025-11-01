@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:magma_cream"
+    },
+    "title": {
+      "translate": "advancements.nether.style_strider.title"
+    },
+    "description": {
+      "translate": "advancements.nether.style_strider.description"
+    }
+  },
+  "parent": "minecraft:nether/shear_strider",
+  "criteria": {
+    "ignite_pyrack": {
+      "trigger": "scorch:style_strider"
+    }
+  },
+  "requirements": [
+    [
+      "ignite_pyrack"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,43 @@
+{
+  "display": {
+    "icon": {
+      "id": "scorch:pyrack"
+    },
+    "title": {
+      "translate": "advancements.nether.ignite_pyrack.title"
+    },
+    "description": {
+      "translate": "advancements.nether.ignite_pyrack.description"
+    }
+  },
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "ignite_pyrack": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": "scorch:pyrack"
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": "minecraft:flint_and_steel"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ignite_pyrack"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
