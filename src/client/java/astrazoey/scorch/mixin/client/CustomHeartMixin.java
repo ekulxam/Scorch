@@ -1,54 +1,55 @@
 package astrazoey.scorch.mixin.client;
 
 import astrazoey.scorch.ClientCache;
-import astrazoey.scorch.Scorch;
+import astrazoey.scorch.ScorchClient;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Debug(export = true)
-@Mixin(InGameHud.class)
+@Mixin(value = InGameHud.class, priority = 100)
 public class CustomHeartMixin {
 
-    @Unique
-    private int scorch$capturePenalty = 0;
+    @Inject(method = "renderHealthBar", at = @At("HEAD"))
+    private void capturePenalty(CallbackInfo ci, @Local(argsOnly = true) PlayerEntity player, @Share("penalty")LocalIntRef localIntRef) {
+        localIntRef.set(ClientCache.getHealthPenalty());
+    }
 
-    @Inject(method = "renderHealthBar", at = @At("TAIL"))
-    private void renderBrokenHearts(DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {
+    @Expression("? >= @(0)")
+    @ModifyExpressionValue(method = "renderHealthBar", at = @At("MIXINEXTRAS:EXPRESSION"))
+    public int skipHeartRender(int original, @Share("penalty")LocalIntRef penalty, @Share("heartsStart") LocalIntRef heartsStart) {
+        heartsStart.set(original);
+        return original + penalty.get();
+    }
+
+    @Inject(method = "renderHealthBar", at = @At("RETURN"))
+    private void renderBrokenHearts(DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci, @Share("penalty")LocalIntRef penalty, @Share("heartsStart") LocalIntRef heartsStart) {
         if (!(player instanceof ClientPlayerEntity)) {
             return;
         }
 
-        scorch$capturePenalty = ClientCache.getHealthPenalty();
+        int capturePenalty = penalty.get();
 
-        if (scorch$capturePenalty <= 0) return;
+        if (capturePenalty <= 0) return;
 
-        Identifier textureId = Scorch.id("textures/gui/sprites/hud/heart/broken.png");
-
-        for (int i = 0; i < scorch$capturePenalty; i++) {
+        for (int i = heartsStart.get(); i < capturePenalty; i++) {
             int row = i / 10;
             int column = i % 10;
 
             int x2 = x + (column * 8);
             int y2 = y - (row * 10);
 
-            context.drawTexture(RenderPipelines.GUI_TEXTURED, textureId, x2, y2, 0, 0, 9, 9, 9, 9);
+            context.drawTexture(RenderPipelines.GUI_TEXTURED, ScorchClient.BROKEN_HEART_TEXTURE, x2, y2, 0, 0, 9, 9, 9, 9);
         }
-    }
-
-    @ModifyConstant(method = "renderHealthBar", constant = @Constant(expandZeroConditions = Constant.Condition.GREATER_THAN_OR_EQUAL_TO_ZERO))
-    public int skipHeartRender(int constant) {
-        return scorch$capturePenalty;
     }
 }

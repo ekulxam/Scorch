@@ -45,12 +45,8 @@ public abstract class StriderEntityMixin extends AnimalEntity implements Shearab
     @Unique
     private static TrackedData<Integer> HAIR_GROWTH;
 
-
-
     public StriderEntityMixin(EntityType<? extends AnimalEntity> entityType, World world, SaddledComponent saddledComponent) {
         super(entityType, world);
-
-
     }
 
     @Inject(method = "initDataTracker", at = @At(value="TAIL"))
@@ -73,8 +69,6 @@ public abstract class StriderEntityMixin extends AnimalEntity implements Shearab
         setHairStyle(view.getInt("hairStyle", 0));
         setHairGrowth(view.getInt("hairGrowth", 0));
     }
-
-
 
     @Inject(method = "interactMob", at = @At(value="HEAD"), cancellable = true)
     public void shearStrider(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
@@ -173,5 +167,4 @@ public abstract class StriderEntityMixin extends AnimalEntity implements Shearab
         HAIR_GROWTH = DataTracker.registerData(StriderEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
         HAIR_STYLE = DataTracker.registerData(StriderEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
     }
-
 }

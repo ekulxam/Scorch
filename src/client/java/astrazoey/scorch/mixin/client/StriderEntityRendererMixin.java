@@ -7,7 +7,6 @@ import net.minecraft.client.render.entity.StriderEntityRenderer;
 import net.minecraft.client.render.entity.state.StriderEntityRenderState;
 import net.minecraft.entity.passive.StriderEntity;
 import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,12 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static astrazoey.scorch.ScorchClient.STRIDER_HAIR;
 import static astrazoey.scorch.ScorchClient.STRIDER_HAIR_STYLE;
 
-@Debug(export = true)
 @Mixin(StriderEntityRenderer.class)
 public class StriderEntityRendererMixin {
 
     /*
-    these should all be prefixed but they're all private so it should be fine
+    These should all be prefixed but they're all private so it should be fine
     Consider putting this into an enum or other data structure so this code is cleaner
      */
     @Unique

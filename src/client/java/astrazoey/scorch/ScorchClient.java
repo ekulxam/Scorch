@@ -11,11 +11,14 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.util.Identifier;
 
 public class ScorchClient implements ClientModInitializer {
 
     public static final RenderStateDataKey<Boolean> STRIDER_HAIR = RenderStateDataKey.create(() -> Scorch.id("strider_hair").toString());
     public static final RenderStateDataKey<Integer> STRIDER_HAIR_STYLE = RenderStateDataKey.create(() -> Scorch.id("strider_hair_style").toString());
+
+    public static final Identifier BROKEN_HEART_TEXTURE = Scorch.id("textures/gui/sprites/hud/heart/broken.png");
 
     @SuppressWarnings("resource")
     @Override
