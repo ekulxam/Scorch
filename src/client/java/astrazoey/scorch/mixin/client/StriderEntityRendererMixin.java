@@ -1,122 +1,102 @@
 package astrazoey.scorch.mixin.client;
 
 import astrazoey.scorch.Scorch;
-import astrazoey.scorch.ScorchComponents;
-import astrazoey.scorch.StriderRenderStateAccess;
-import astrazoey.scorch.mixin.StriderEntityMixin;
 import astrazoey.scorch.strider.StriderHairInterface;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.render.entity.StriderEntityRenderer;
 import net.minecraft.client.render.entity.state.StriderEntityRenderState;
-import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.passive.StriderEntity;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static astrazoey.scorch.ScorchClient.STRIDER_HAIR;
+import static astrazoey.scorch.ScorchClient.STRIDER_HAIR_STYLE;
+
+@Debug(export = true)
 @Mixin(StriderEntityRenderer.class)
 public class StriderEntityRendererMixin {
 
-
+    /*
+    these should all be prefixed but they're all private so it should be fine
+    Consider putting this into an enum or other data structure so this code is cleaner
+     */
     @Unique
     private static final Identifier TEXTURE = Identifier.of("textures/entity/strider/strider.png");
     @Unique
     private static final Identifier COLD_TEXTURE = Identifier.of("textures/entity/strider/strider_cold.png");
 
     @Unique
-    private static final Identifier TEXTURE_HAIRLESS = Identifier.of(Scorch.MOD_ID, "textures/entity/strider/strider_no_hair.png");
+    private static final Identifier TEXTURE_HAIRLESS = Scorch.id("textures/entity/strider/strider_no_hair.png");
     @Unique
-    private static final Identifier COLD_TEXTURE_HAIRLESS = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_cold_no_hair.png");
+    private static final Identifier COLD_TEXTURE_HAIRLESS = Scorch.id("textures/entity/strider/strider_cold_no_hair.png");
 
     @Unique
-    private static final Identifier TEXTURE_HAIR_1 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_hair_1.png");
+    private static final Identifier TEXTURE_HAIR_1 = Scorch.id("textures/entity/strider/strider_hair_1.png");
     @Unique
-    private static final Identifier COLD_TEXTURE_HAIR_1 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_cold_hair_1.png");
+    private static final Identifier COLD_TEXTURE_HAIR_1 = Scorch.id("textures/entity/strider/strider_cold_hair_1.png");
 
     @Unique
-    private static final Identifier TEXTURE_HAIR_2 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_hair_2.png");
+    private static final Identifier TEXTURE_HAIR_2 = Scorch.id("textures/entity/strider/strider_hair_2.png");
     @Unique
-    private static final Identifier COLD_TEXTURE_HAIR_2 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_cold_hair_2.png");
+    private static final Identifier COLD_TEXTURE_HAIR_2 = Scorch.id("textures/entity/strider/strider_cold_hair_2.png");
 
     @Unique
-    private static final Identifier TEXTURE_HAIR_3 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_hair_3.png");
+    private static final Identifier TEXTURE_HAIR_3 = Scorch.id("textures/entity/strider/strider_hair_3.png");
     @Unique
-    private static final Identifier COLD_TEXTURE_HAIR_3 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_cold_hair_3.png");
+    private static final Identifier COLD_TEXTURE_HAIR_3 = Scorch.id("textures/entity/strider/strider_cold_hair_3.png");
 
     @Unique
-    private static final Identifier TEXTURE_HAIR_4 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_hair_4.png");
+    private static final Identifier TEXTURE_HAIR_4 = Scorch.id("textures/entity/strider/strider_hair_4.png");
     @Unique
-    private static final Identifier COLD_TEXTURE_HAIR_4 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_cold_hair_4.png");
+    private static final Identifier COLD_TEXTURE_HAIR_4 = Scorch.id("textures/entity/strider/strider_cold_hair_4.png");
 
     @Unique
-    private static final Identifier TEXTURE_HAIR_5 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_hair_5.png");
+    private static final Identifier TEXTURE_HAIR_5 = Scorch.id("textures/entity/strider/strider_hair_5.png");
     @Unique
-    private static final Identifier COLD_TEXTURE_HAIR_5 = Identifier.of(Scorch.MOD_ID,"textures/entity/strider/strider_cold_hair_5.png");
+    private static final Identifier COLD_TEXTURE_HAIR_5 = Scorch.id("textures/entity/strider/strider_cold_hair_5.png");
 
+    @Inject(method = "updateRenderState(Lnet/minecraft/entity/passive/StriderEntity;Lnet/minecraft/client/render/entity/state/StriderEntityRenderState;F)V", at = @At("RETURN"))
+    public void updateRenderState(StriderEntity striderEntity, StriderEntityRenderState renderState, float tickProgress, CallbackInfo ci) {
+        StriderHairInterface entityAccess = (StriderHairInterface) striderEntity;
 
-    @Unique
-    public boolean hasHair;
-    @Unique
-    public int hairStyle;
-
-    @Inject(method = "updateRenderState*", at = @At("TAIL"))
-    public void updateRenderState(StriderEntity striderEntity, StriderEntityRenderState striderEntityRenderState, float f, CallbackInfo ci) {
-        StriderHairInterface entityAccess = (StriderHairInterface)(Object)striderEntity;
-        StriderRenderStateAccess stateAccess = (StriderRenderStateAccess)(Object)striderEntityRenderState;
-
-        stateAccess.sc$setHasHair(entityAccess.scorch$hasHair());
-        stateAccess.sc$setHairStyle(entityAccess.scorch$getHairStyle());
+        renderState.setData(STRIDER_HAIR, entityAccess.scorch$hasHair());
+        renderState.setData(STRIDER_HAIR_STYLE, entityAccess.scorch$getHairStyle());
     }
 
+    @ModifyReturnValue(method = "getTexture(Lnet/minecraft/client/render/entity/state/StriderEntityRenderState;)Lnet/minecraft/util/Identifier;", at = @At("RETURN"))
+    public Identifier getTexture(Identifier original, StriderEntityRenderState renderState) {
+        final boolean hasHair = renderState.getDataOrDefault(STRIDER_HAIR, false);
+        final int hairStyle = renderState.getDataOrDefault(STRIDER_HAIR_STYLE, 0);
 
-    @Inject(method = "getTexture*", at = @At("HEAD"), cancellable = true)
-    public void getTexture(StriderEntityRenderState striderEntity, CallbackInfoReturnable<Identifier> cir) {
-
-        StriderRenderStateAccess stateAccess = (StriderRenderStateAccess)(Object)striderEntity;
-
-        hasHair = stateAccess.sc$hasHair();
-        hairStyle = stateAccess.sc$getHairStyle();
-
-        if(hasHair) {
-            if(striderEntity.cold) {
-                getHairTexture(cir, COLD_TEXTURE, COLD_TEXTURE_HAIR_1, COLD_TEXTURE_HAIR_2, COLD_TEXTURE_HAIR_3, COLD_TEXTURE_HAIR_4, COLD_TEXTURE_HAIR_5);
+        if (hasHair) {
+            if (renderState.cold) {
+                return getHairTexture(hairStyle, COLD_TEXTURE, COLD_TEXTURE_HAIR_1, COLD_TEXTURE_HAIR_2, COLD_TEXTURE_HAIR_3, COLD_TEXTURE_HAIR_4, COLD_TEXTURE_HAIR_5);
             } else {
-                getHairTexture(cir, TEXTURE, TEXTURE_HAIR_1, TEXTURE_HAIR_2, TEXTURE_HAIR_3, TEXTURE_HAIR_4, TEXTURE_HAIR_5);
+                return getHairTexture(hairStyle, TEXTURE, TEXTURE_HAIR_1, TEXTURE_HAIR_2, TEXTURE_HAIR_3, TEXTURE_HAIR_4, TEXTURE_HAIR_5);
             }
+        }
+
+        if (renderState.cold) {
+            return COLD_TEXTURE_HAIRLESS;
         } else {
-            if(striderEntity.cold) {
-                cir.setReturnValue(COLD_TEXTURE_HAIRLESS);
-            } else {
-                cir.setReturnValue(TEXTURE_HAIRLESS);
-            }
+            return TEXTURE_HAIRLESS;
         }
     }
 
     @Unique
-    private void getHairTexture(CallbackInfoReturnable<Identifier> cir, Identifier texture, Identifier textureHair1, Identifier textureHair2, Identifier textureHair3, Identifier textureHair4, Identifier textureHair5) {
-        switch (hairStyle) {
-            case 0:
-                cir.setReturnValue(texture);
-                break;
-            case 1:
-                cir.setReturnValue(textureHair1);
-                break;
-            case 2:
-                cir.setReturnValue(textureHair2);
-                break;
-            case 3:
-                cir.setReturnValue(textureHair3);
-                break;
-            case 4:
-                cir.setReturnValue(textureHair4);
-                break;
-            case 5:
-                cir.setReturnValue(textureHair5);
-                break;
-        }
+    private Identifier getHairTexture(int hairStyle, Identifier texture, Identifier textureHair1, Identifier textureHair2, Identifier textureHair3, Identifier textureHair4, Identifier textureHair5) {
+        return switch (hairStyle) {
+            case 1 -> textureHair1;
+            case 2 -> textureHair2;
+            case 3 -> textureHair3;
+            case 4 -> textureHair4;
+            case 5 -> textureHair5;
+            default -> texture; // also case 0
+        };
     }
 }

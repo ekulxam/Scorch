@@ -3,8 +3,9 @@
   "package": "astrazoey.scorch.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AbstractBlockMixin",
+    "BlocksMixin",
     "CryingObsidianBlockMixin",
-    "FireImmunityMixin",
     "ItemMixin",
     "LivingEntityMixin",
     "PlayerCurseMixin",

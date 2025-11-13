@@ -78,10 +78,10 @@ public abstract class StriderEntityMixin extends AnimalEntity implements Shearab
 
     @Inject(method = "interactMob", at = @At(value="HEAD"), cancellable = true)
     public void shearStrider(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if(dataTracker.get(HAIR_STATE) && player.getStackInHand(hand).getItem() == Items.SHEARS) {
+        if (dataTracker.get(HAIR_STATE) && player.getStackInHand(hand).getItem() == Items.SHEARS) {
             World world = player.getEntityWorld();
 
-            if(world instanceof ServerWorld) {
+            if (world instanceof ServerWorld) {
                 ItemEntity stringDrop = new ItemEntity(world, this.getX(), this.getY(), this.getZ(), new ItemStack(Items.STRING));
                 world.spawnEntity(stringDrop);
 
@@ -99,12 +99,12 @@ public abstract class StriderEntityMixin extends AnimalEntity implements Shearab
 
     @Inject(method = "interactMob", at = @At(value="HEAD"), cancellable = true)
     public void creamStrider(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if(dataTracker.get(HAIR_STATE) && player.getStackInHand(hand).getItem() == Items.MAGMA_CREAM) {
+        if (dataTracker.get(HAIR_STATE) && player.getStackInHand(hand).getItem() == Items.MAGMA_CREAM) {
             World world = player.getEntityWorld();
 
-            if(world instanceof ServerWorld) {
+            if (world instanceof ServerWorld) {
                 setHairStyle((dataTracker.get(HAIR_STYLE)) +1);
-                if(dataTracker.get(HAIR_STYLE) > 4) {
+                if (dataTracker.get(HAIR_STYLE) > 4) {
                     setHairStyle(0);
                 }
 
@@ -120,10 +120,10 @@ public abstract class StriderEntityMixin extends AnimalEntity implements Shearab
 
     @Inject(method = "interactMob", at = @At(value="HEAD"), cancellable = true)
     public void feedStrider(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if(!dataTracker.get(HAIR_STATE) && player.getStackInHand(hand).getItem() == Items.WARPED_ROOTS) {
+        if (!dataTracker.get(HAIR_STATE) && player.getStackInHand(hand).getItem() == Items.WARPED_ROOTS) {
             World world = player.getEntityWorld();
 
-            if(world instanceof ServerWorld) {
+            if (world instanceof ServerWorld) {
                 dataTracker.set(HAIR_GROWTH, dataTracker.get(HAIR_GROWTH)+1200);
 
                 player.getStackInHand(hand).decrement(1);
@@ -136,9 +136,9 @@ public abstract class StriderEntityMixin extends AnimalEntity implements Shearab
 
     @Inject(method = "tick", at = @At(value="TAIL"))
     public void growHair(CallbackInfo ci) {
-        if(!dataTracker.get(HAIR_STATE) && !this.isCold()) {
+        if (!dataTracker.get(HAIR_STATE) && !this.isCold()) {
             dataTracker.set(HAIR_GROWTH, dataTracker.get(HAIR_GROWTH)+1);
-            if(dataTracker.get(HAIR_GROWTH) >= 6000) {
+            if (dataTracker.get(HAIR_GROWTH) >= 6000) {
                 dataTracker.set(HAIR_GROWTH, 0);
                 dataTracker.set(HAIR_STATE, true);
             }

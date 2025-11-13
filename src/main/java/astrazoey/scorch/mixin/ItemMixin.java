@@ -5,7 +5,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,13 +16,10 @@ public class ItemMixin {
 
     @Inject(method = "finishUsing", at = @At(value="HEAD"))
     public void finishUsingEvent(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
-
-        if(!(user instanceof PlayerEntity)) {
+        if (!(user instanceof PlayerEntity player)) {
             return;
         }
 
-        ActionResult result = FinishUsingCallback.EVENT.invoker().finishUsing((PlayerEntity) user, stack);
-
+        FinishUsingCallback.EVENT.invoker().finishUsing(player, stack);
     }
-
 }

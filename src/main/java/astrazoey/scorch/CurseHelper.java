@@ -1,7 +1,7 @@
 package astrazoey.scorch;
 
 public class CurseHelper {
-        public static int getPenalty(int curseExposure, float maxHp) {
+    public static int getPenalty(int curseExposure, float maxHp) {
         float healthPenalty = 0;
 
         // just in case other mods increase max hp
@@ -28,11 +28,10 @@ public class CurseHelper {
         }
 
         // health bar stuff gets sussy after 3 lines of hearts
-        if(healthPenalty > 29) {
+        if (healthPenalty > 29) {
             healthPenalty = 29;
         }
 
         return (int) healthPenalty;
     }
-
 }

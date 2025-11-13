@@ -6,8 +6,7 @@
     "CurseFogMixin",
     "CustomHeartMixin",
     "NetherFogMixin",
-    "StriderEntityRendererMixin",
-    "StriderEntityRenderStateMixin"
+    "StriderEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

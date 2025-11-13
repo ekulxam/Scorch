@@ -41,7 +41,7 @@ public class ScorchPlacedFeatures {
     }
 
     public static RegistryKey<PlacedFeature> registerKey(String name) {
-        return RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of(Scorch.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.PLACED_FEATURE, Scorch.id(name));
     }
 
     private static void register(Registerable<PlacedFeature> context,

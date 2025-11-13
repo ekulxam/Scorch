@@ -2,26 +2,20 @@ package astrazoey.scorch.registry;
 
 import astrazoey.scorch.Scorch;
 import astrazoey.scorch.block.*;
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.waypoint.Waypoint;
 
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class ScorchBlocks implements ModInitializer {
+public class ScorchBlocks {
 
+    @SuppressWarnings("SameParameterValue")
     private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
         // Create a registry key for the block
         RegistryKey<Block> blockKey = keyOfBlock(name);
@@ -43,11 +37,11 @@ public class ScorchBlocks implements ModInitializer {
     }
 
     private static RegistryKey<Block> keyOfBlock(String name) {
-        return RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Scorch.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.BLOCK, Scorch.id(name));
     }
 
     private static RegistryKey<Item> keyOfItem(String name) {
-        return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Scorch.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.ITEM, Scorch.id(name));
     }
 
     public static final Block PYRACK = register(
@@ -147,11 +141,5 @@ public class ScorchBlocks implements ModInitializer {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register((itemGroup) -> itemGroup.add(ScorchBlocks.BURIAL_URN));
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register((itemGroup) -> itemGroup.add(ScorchBlocks.BURIAL_URN));
-
-    }
-
-    @Override
-    public void onInitialize() {
-
     }
 }

@@ -19,6 +19,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProperties;
 
 import java.util.Set;
 
@@ -47,25 +48,36 @@ public class ReturningTotem extends Item {
 
     @Override
     public boolean onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-
-        if(!(user instanceof ServerPlayerEntity serverPlayer) || world.isClient()) return false;
+        if (!(user instanceof ServerPlayerEntity serverPlayer)) return false;
+        // no need to check isClient because ServerPlayerEntity is never client
 
         int useTime = this.getMaxUseTime(stack, user) - remainingUseTicks;
 
-        if(useTime < 20) return false;
+        if (useTime < 20) return false;
 
         // Get respawn info
-        var respawnData = serverPlayer.getRespawn() != null ? serverPlayer.getRespawn().respawnData() : null;
-        RegistryKey<World> dimensionKey = respawnData != null ? respawnData.getDimension() : World.OVERWORLD;
+        ServerPlayerEntity.Respawn respawn = serverPlayer.getRespawn();
+        WorldProperties.SpawnPoint respawnData = null;
+        RegistryKey<World> dimensionKey = World.OVERWORLD;
+        if (respawn != null) {
+            respawnData = respawn.respawnData();
+            if (respawnData != null) {
+                dimensionKey = respawnData.getDimension();
+            }
+        }
 
         MinecraftServer server = serverPlayer.getEntityWorld().getServer();
 
         ServerWorld targetWorld = server.getWorld(dimensionKey);
         if (targetWorld == null) return false;
 
-        BlockPos spawnPos = respawnData != null && respawnData.getPos() != null
-                ? respawnData.getPos()
-                : targetWorld.getSpawnPoint().getPos();
+        BlockPos spawnPos = null;
+        if (respawnData != null) {
+            spawnPos = respawnData.getPos();
+        }
+        if (spawnPos == null) {
+            spawnPos = targetWorld.getSpawnPoint().getPos();
+        }
 
         // Send a packet first to prevent bugs with mid-teleportation
         ReturningTotemS2CPayload returningPayload = new ReturningTotemS2CPayload(stack);
@@ -95,7 +107,7 @@ public class ReturningTotem extends Item {
                 1.0F
         );
 
-        if (!serverPlayer.isCreative()) stack.decrement(1);
+        stack.decrementUnlessCreative(1, serverPlayer);
         return true;
     }
 

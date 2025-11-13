@@ -2,15 +2,26 @@ package astrazoey.scorch.registry;
 
 import astrazoey.scorch.Scorch;
 import astrazoey.scorch.criterion.*;
-import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.advancement.criterion.Criterion;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 
 public class ScorchCriteria {
-    public static final ShootBlockCriterion SHOOT_BLOCK = Criteria.register(Scorch.MOD_ID + ":shoot_block", new ShootBlockCriterion());
-    public static final WitherFireballCriterion WITHER_FIREBALL = Criteria.register(Scorch.MOD_ID + ":wither_fireball", new WitherFireballCriterion());
-    public static final CureCurseCriterion CURE_CURSE = Criteria.register(Scorch.MOD_ID + ":cure_curse", new CureCurseCriterion());
-    public static final UseReturningTotemCriterion USE_RETURNING_TOTEM = Criteria.register(Scorch.MOD_ID + ":use_returning_totem", new UseReturningTotemCriterion());
-    public static final StyleStriderCriterion STYLE_STRIDER = Criteria.register(Scorch.MOD_ID + ":style_strider", new StyleStriderCriterion());
-    public static final ShearStriderCriterion SHEAR_STRIDER = Criteria.register(Scorch.MOD_ID + ":shear_strider", new ShearStriderCriterion());
+    public static final GenericPlayerCriterion SHOOT_BLOCK = register("shoot_block", new GenericPlayerCriterion());
+    public static final GenericPlayerCriterion WITHER_FIREBALL = register("wither_fireball", new GenericPlayerCriterion());
+    public static final GenericPlayerCriterion CURE_CURSE = register("cure_curse", new GenericPlayerCriterion());
+    public static final GenericPlayerCriterion USE_RETURNING_TOTEM = register("use_returning_totem", new GenericPlayerCriterion());
+    public static final GenericPlayerCriterion STYLE_STRIDER = register("style_strider", new GenericPlayerCriterion());
+    public static final GenericPlayerCriterion SHEAR_STRIDER = register("shear_strider", new GenericPlayerCriterion());
+
+    private static <T extends Criterion<?>> T register(String name, T criterion) {
+        return register(Scorch.id(name), criterion);
+    }
+
+    private static <T extends Criterion<?>> T register(Identifier id, T criterion) {
+        return Registry.register(Registries.CRITERION, id, criterion);
+    }
 
     public static void initialize() {
     }

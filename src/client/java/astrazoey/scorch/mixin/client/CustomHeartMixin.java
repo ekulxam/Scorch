@@ -8,6 +8,7 @@ import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,26 +17,26 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-
+@Debug(export = true)
 @Mixin(InGameHud.class)
 public class CustomHeartMixin {
 
     @Unique
-    int capturePenalty = 0;
+    private int scorch$capturePenalty = 0;
 
     @Inject(method = "renderHealthBar", at = @At("TAIL"))
     private void renderBrokenHearts(DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {
-        if(!(player instanceof ClientPlayerEntity)) {
+        if (!(player instanceof ClientPlayerEntity)) {
             return;
         }
 
-        capturePenalty = ClientCache.getHealthPenalty();
+        scorch$capturePenalty = ClientCache.getHealthPenalty();
 
-        if (capturePenalty <= 0) return;
+        if (scorch$capturePenalty <= 0) return;
 
-        Identifier textureId = Identifier.of(Scorch.MOD_ID, "textures/gui/sprites/hud/heart/broken.png");
+        Identifier textureId = Scorch.id("textures/gui/sprites/hud/heart/broken.png");
 
-        for (int i = 0; i < capturePenalty; i++) {
+        for (int i = 0; i < scorch$capturePenalty; i++) {
             int row = i / 10;
             int column = i % 10;
 
@@ -48,6 +49,6 @@ public class CustomHeartMixin {
 
     @ModifyConstant(method = "renderHealthBar", constant = @Constant(expandZeroConditions = Constant.Condition.GREATER_THAN_OR_EQUAL_TO_ZERO))
     public int skipHeartRender(int constant) {
-        return capturePenalty;
+        return scorch$capturePenalty;
     }
 }

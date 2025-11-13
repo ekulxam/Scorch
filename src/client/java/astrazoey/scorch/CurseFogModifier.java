@@ -27,7 +27,6 @@ public class CurseFogModifier extends FogModifier {
 
         data.skyEnd = data.environmentalEnd;
         data.cloudEnd = data.environmentalEnd;
-
     }
 
     public boolean shouldApply(@Nullable CameraSubmersionType submersionType, Entity cameraEntity) {

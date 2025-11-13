@@ -7,31 +7,23 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Optional;
 
-public class UseReturningTotemCriterion extends AbstractCriterion<UseReturningTotemCriterion.Conditions> {
+public class GenericPlayerCriterion extends AbstractCriterion<GenericPlayerCriterion.Conditions> {
     @Override
     public Codec<Conditions> getConditionsCodec() {
         return Conditions.CODEC;
     }
 
     public record Conditions(Optional<LootContextPredicate> playerPredicate) implements AbstractCriterion.Conditions {
-        public static Codec<UseReturningTotemCriterion.Conditions> CODEC = LootContextPredicate.CODEC.optionalFieldOf("player")
+        public static Codec<GenericPlayerCriterion.Conditions> CODEC = LootContextPredicate.CODEC.optionalFieldOf("player")
                 .xmap(Conditions::new, Conditions::player).codec();
 
         @Override
         public Optional<LootContextPredicate> player() {
             return playerPredicate;
         }
-
-        public boolean requirementsMet() {
-            return true; // AbstractCriterion#trigger helpfully checks the playerPredicate for us.
-        }
-
     }
-
-
 
     public void trigger(ServerPlayerEntity player) {
-        trigger(player, Conditions::requirementsMet);
+        trigger(player, conditions -> true);
     }
-
 }

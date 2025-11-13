@@ -11,15 +11,9 @@ public interface FinishUsingCallback {
     Event<FinishUsingCallback> EVENT = EventFactory.createArrayBacked(FinishUsingCallback.class,
             (listeners) -> (player, itemStack) -> {
                 for (FinishUsingCallback listener : listeners) {
-                    ActionResult result = listener.finishUsing(player, itemStack);
-
-                    if (result != ActionResult.PASS) {
-                        return result;
-                    }
+                    listener.finishUsing(player, itemStack);
                 }
-
-                return ActionResult.PASS;
             });
 
-    ActionResult finishUsing(PlayerEntity player, ItemStack itemStack);
+    void finishUsing(PlayerEntity player, ItemStack itemStack);
 }

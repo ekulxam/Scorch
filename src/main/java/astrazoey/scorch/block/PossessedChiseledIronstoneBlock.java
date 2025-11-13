@@ -20,10 +20,7 @@ import net.minecraft.world.explosion.Explosion;
 
 import java.util.List;
 
-
 public class PossessedChiseledIronstoneBlock extends Block {
-
-
 
     public PossessedChiseledIronstoneBlock(Settings settings) {
         super(settings);
@@ -82,7 +79,7 @@ public class PossessedChiseledIronstoneBlock extends Block {
             );
 
             for (PlayerEntity nearbyPlayer : nearbyPlayers) {
-                if(!nearbyPlayer.isCreative()) {
+                if (!nearbyPlayer.isCreative()) {
                     nearbyPlayer.increaseStat(Scorch.CURSE_EXPOSURE_STAT, curseExposureBreakAmount);
                 }
             }
@@ -109,7 +106,7 @@ public class PossessedChiseledIronstoneBlock extends Block {
     }
 
     public void tryCursePlayer(BlockState state, ServerWorld world, BlockPos pos) {
-        if(state.get(ACTIVATED)) {
+        if (state.get(ACTIVATED)) {
             checkForCursedPlayers(world, pos, true);
             world.scheduleBlockTick(pos, this, curseCheckTime);
         }
@@ -122,10 +119,10 @@ public class PossessedChiseledIronstoneBlock extends Block {
 
     @Override
     protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if(!checkForCursedPlayers(world, pos, false)) {
+        if (!checkForCursedPlayers(world, pos, false)) {
             world.setBlockState(pos, state.with(ACTIVATED, false), 3);
         } else {
-            if(!state.get(ACTIVATED)) {
+            if (!state.get(ACTIVATED)) {
                 wakeUp(world, pos, state);
             }
         }
@@ -145,9 +142,9 @@ public class PossessedChiseledIronstoneBlock extends Block {
             for (PlayerEntity player : players) {
                 ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
 
-                if(addCurseToPlayer && serverPlayer.getStatHandler().getStat(Scorch.CURSE_EXPOSURE_STAT) == 0) {
+                if (addCurseToPlayer && serverPlayer.getStatHandler().getStat(Scorch.CURSE_EXPOSURE_STAT) == 0) {
                     serverPlayer.increaseStat(Scorch.CURSE_EXPOSURE_STAT, 1);
-                    if(serverPlayer.getStatHandler().getStat(Scorch.CURSE_ACTIVE_STAT) < 2) {
+                    if (serverPlayer.getStatHandler().getStat(Scorch.CURSE_ACTIVE_STAT) < 2) {
                         serverPlayer.increaseStat(Scorch.CURSE_ACTIVE_STAT, 2);
                     }
                 }
@@ -155,12 +152,12 @@ public class PossessedChiseledIronstoneBlock extends Block {
                 if (serverPlayer.getStatHandler().getStat(Scorch.CURSE_EXPOSURE_STAT) > 0) {
                     serverPlayer.increaseStat(Scorch.CURSE_EXPOSURE_STAT, 1);
                     world.playSound(null, pos, ScorchSounds.CURSE, SoundCategory.BLOCKS, 1.0F, 0.9F + world.random.nextFloat() * 0.2F);
-                    if(serverPlayer.getStatHandler().getStat(Scorch.CURSE_ACTIVE_STAT) < 2) {
+                    if (serverPlayer.getStatHandler().getStat(Scorch.CURSE_ACTIVE_STAT) < 2) {
                         serverPlayer.increaseStat(Scorch.CURSE_ACTIVE_STAT, 2);
                     }
                 }
 
-                if(serverPlayer.getStatHandler().getStat(Scorch.CURSE_EXPOSURE_STAT) >= wakeCurseAmount) {
+                if (serverPlayer.getStatHandler().getStat(Scorch.CURSE_EXPOSURE_STAT) >= wakeCurseAmount) {
                     foundCursedPlayer = true;
                 }
             }
@@ -170,16 +167,16 @@ public class PossessedChiseledIronstoneBlock extends Block {
 
 
     public static void wakeUp(ServerWorld world, BlockPos pos, BlockState state) {
+        // this should technically just be a world.isClient check but oh well
         world.playSound(null, pos, ScorchSounds.CURSE_FIRST_TIME, SoundCategory.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
         world.setBlockState(pos, state.with(ACTIVATED, true), 3);
     }
 
+    @Override
     protected void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
         super.onStacksDropped(state, world, pos, tool, dropExperience);
         if (dropExperience) {
             this.dropExperienceWhenMined(world, pos, tool, UniformIntProvider.create(10, 18));
         }
-
     }
-
 }

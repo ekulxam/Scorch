@@ -18,7 +18,7 @@ public class ScorchSounds {
     public static final SoundEvent RETURN = registerSound("return");
 
     private static SoundEvent registerSound(String id) {
-        Identifier identifier = Identifier.of(Scorch.MOD_ID, id);
+        Identifier identifier = Scorch.id(id);
         return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
     }
 

@@ -18,7 +18,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 
-
 public class IgnistoneBlock extends Block {
     public IgnistoneBlock(Settings settings) {
         super(settings);
@@ -29,22 +28,19 @@ public class IgnistoneBlock extends Block {
         if (!world.isClient()) {
             ItemStack stack = player.getMainHandStack();
 
-            RegistryEntry<Enchantment> enchantment = player.getRegistryManager().getOptional(RegistryKeys.ENCHANTMENT).get().getOrThrow(Enchantments.SILK_TOUCH);
+            RegistryEntry<Enchantment> enchantment = player.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.SILK_TOUCH);
             boolean hasSilkTouch = EnchantmentHelper.getLevel(enchantment, stack) > 0;
 
             if (!hasSilkTouch && !player.isCreative()) {
                 placeLava(world, pos);
             }
         }
-
-        super.onBreak(world, pos, state, player);
-        return state;
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override
     public void onDestroyedByExplosion(ServerWorld world, BlockPos blockPos, Explosion explosion) {
         placeLava(world, blockPos);
-
     }
 
     public void placeLava(World world, BlockPos pos) {
@@ -55,5 +51,4 @@ public class IgnistoneBlock extends Block {
             serverWorld.spawnParticles(ParticleTypes.SMOKE, pos.getX(), pos.getY(), pos.getZ(), 5,  0.1d, 0.1d, 0.1d, 0.2d);
         }
     }
-
 }

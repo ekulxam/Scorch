@@ -11,15 +11,9 @@ public interface OnKilledByCallback {
     Event<OnKilledByCallback> EVENT = EventFactory.createArrayBacked(OnKilledByCallback.class,
             (listeners) -> (player, killedEntity) -> {
                 for (OnKilledByCallback listener : listeners) {
-                    ActionResult result = listener.onKilledBy(player, killedEntity);
-
-                    if (result != ActionResult.PASS) {
-                        return result;
-                    }
+                    listener.onKilledBy(player, killedEntity);
                 }
-
-                return ActionResult.PASS;
             });
 
-    ActionResult onKilledBy(PlayerEntity player, LivingEntity killedEntity);
+    void onKilledBy(PlayerEntity player, LivingEntity killedEntity);
 }

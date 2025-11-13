@@ -28,19 +28,20 @@ import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 
 public class PyrackBlock extends Block {
+    public static final BooleanProperty ACTIVATED = BooleanProperty.of("activated");
+
     public PyrackBlock(Settings settings) {
         super(settings);
 
-        setDefaultState(getDefaultState().with(ACTIVATED, false));
+        setDefaultState(this.stateManager.getDefaultState().with(ACTIVATED, false));
     }
-
-    public static final BooleanProperty ACTIVATED = BooleanProperty.of("activated");
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(ACTIVATED);
     }
 
+    // are you sure all of these are only called on server
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!stack.isOf(Items.FLINT_AND_STEEL) && !stack.isOf(Items.FIRE_CHARGE)) {
             return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
@@ -67,18 +68,15 @@ public class PyrackBlock extends Block {
             BlockPos pos = hit.getBlockPos();
             Entity entity = projectile.getOwner();
 
-
-
             if (projectile.isOnFire() && projectile.canModifyAt((ServerWorld) world, pos)) {
                 world.setBlockState(pos, state.with(ACTIVATED, true));
                 world.scheduleBlockTick(pos, this, 1);
 
                 if (entity instanceof ServerPlayerEntity) {
-                    if(projectile instanceof ArrowEntity) {
+                    if (projectile instanceof ArrowEntity) {
                         ScorchCriteria.SHOOT_BLOCK.trigger((ServerPlayerEntity) entity);
                     }
                 }
-
             }
         }
     }
@@ -96,7 +94,6 @@ public class PyrackBlock extends Block {
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         // Detonation
         detonate(world, pos);
-
     }
 
     public void detonate(ServerWorld world, BlockPos pos) {
@@ -109,8 +106,5 @@ public class PyrackBlock extends Block {
         if (dropExperience) {
             this.dropExperienceWhenMined(world, pos, tool, UniformIntProvider.create(1, 5));
         }
-
     }
-
-
 }
