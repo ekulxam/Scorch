@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AbstractBlockMixin",
+    "AnimalEntityMixin",
     "BlocksMixin",
     "CryingObsidianBlockMixin",
     "ItemMixin",
