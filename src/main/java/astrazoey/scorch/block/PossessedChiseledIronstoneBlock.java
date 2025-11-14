@@ -24,7 +24,7 @@ public class PossessedChiseledIronstoneBlock extends Block {
 
     public PossessedChiseledIronstoneBlock(Settings settings) {
         super(settings);
-        setDefaultState(getDefaultState().with(ACTIVATED, false));
+        setDefaultState(this.stateManager.getDefaultState().with(ACTIVATED, false));
     }
 
     public static final BooleanProperty ACTIVATED = BooleanProperty.of("activated");
