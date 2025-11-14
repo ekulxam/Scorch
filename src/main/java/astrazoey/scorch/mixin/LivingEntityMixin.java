@@ -23,10 +23,10 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "onKilledBy", at = @At(value="RETURN"))
     public void finishUsingEvent(LivingEntity adversary, CallbackInfo ci) {
-
         if (!(adversary instanceof PlayerEntity player)) {
             return;
         }
+
         OnKilledByCallback.EVENT.invoker().onKilledBy(player, (LivingEntity) (Object) this);
     }
 

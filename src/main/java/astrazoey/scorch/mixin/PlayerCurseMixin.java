@@ -25,6 +25,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerPlayerEntity.class)
 public abstract class PlayerCurseMixin extends PlayerEntity {
 
+    @Unique
+    private static final int scorch$CURSE_REDUCTION_TIME = 15;
+
+    @Unique
+    private static final int scorch$CURSE_SAFE_TIME = 1;
+
     @Shadow
     public abstract ServerStatHandler getStatHandler();
 
@@ -32,18 +38,12 @@ public abstract class PlayerCurseMixin extends PlayerEntity {
     public abstract ServerWorld getEntityWorld();
 
     @Unique
-    int tickCounter = 0;
+    private int scorch$tickCounter = 0;
     @Unique
-    int safeCounter = 0;
+    private int scorch$safeCounter = 0;
 
     @Unique
-    final int curseReductionTime = 15;
-
-    @Unique
-    final int curseSafeTime = 1;
-
-    @Unique
-    int curseDisplayed = 0;
+    private int curseDisplayed = 0;
 
     public PlayerCurseMixin(World world, GameProfile profile) {
         super(world, profile);
@@ -57,10 +57,10 @@ public abstract class PlayerCurseMixin extends PlayerEntity {
 
     @Unique
     private void scorch$tickCurse() {
-        tickCounter++;
+        scorch$tickCounter++;
 
-        if (tickCounter >= (curseReductionTime * 20)) {
-            tickCounter = 0;
+        if (scorch$tickCounter >= (scorch$CURSE_REDUCTION_TIME * 20)) {
+            scorch$tickCounter = 0;
 
             int current = this.getStatHandler().getStat(Scorch.CURSE_EXPOSURE_STAT);
 
@@ -73,10 +73,10 @@ public abstract class PlayerCurseMixin extends PlayerEntity {
             }
         }
 
-        safeCounter++;
+        scorch$safeCounter++;
 
-        if (safeCounter >= (curseSafeTime * 20)) {
-            safeCounter = 0;
+        if (scorch$safeCounter >= (scorch$CURSE_SAFE_TIME * 20)) {
+            scorch$safeCounter = 0;
             int active = this.getStatHandler().getStat(Scorch.CURSE_ACTIVE_STAT);
 
             if (active > 0) {
