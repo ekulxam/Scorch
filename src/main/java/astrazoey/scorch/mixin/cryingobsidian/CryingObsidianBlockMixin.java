@@ -1,4 +1,4 @@
-package astrazoey.scorch.mixin;
+package astrazoey.scorch.mixin.cryingobsidian;
 
 import astrazoey.scorch.registry.ScorchBlocks;
 import net.minecraft.block.BlockState;

@@ -6,6 +6,7 @@ import astrazoey.scorch.events.OnKilledByCallback;
 import astrazoey.scorch.network.CurseActiveS2CPayload;
 import astrazoey.scorch.network.CurseExposureS2CPayload;
 import astrazoey.scorch.network.ReturningTotemS2CPayload;
+import astrazoey.scorch.registry.ScorchAttachmentTypes;
 import astrazoey.scorch.registry.ScorchBlocks;
 import astrazoey.scorch.registry.ScorchCriteria;
 import astrazoey.scorch.registry.ScorchItems;
@@ -20,18 +21,28 @@ import net.minecraft.block.BlockState;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DamageResistantComponent;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.WitherSkeletonEntity;
+import net.minecraft.entity.passive.StriderEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatFormatter;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +87,8 @@ public class Scorch implements ModInitializer {
                 }
             }
         });
+
+        UseEntityCallback.EVENT.register(Scorch::interactStrider);
 
         DefaultItemComponentEvents.MODIFY.register(context -> {
             Consumer<ComponentMap.Builder> fireImmunity = builder -> {
@@ -134,6 +147,62 @@ public class Scorch implements ModInitializer {
                 world.setBlockState(pos, state.with(PossessedChiseledIronstoneBlock.ACTIVATED, true));
             }
         });
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    private static ActionResult interactStrider(PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult hitResult) {
+        if (!(world instanceof ServerWorld serverWorld)) {
+            return ActionResult.PASS;
+        }
+
+        if (!(entity instanceof StriderEntity strider)) {
+            return ActionResult.PASS;
+        }
+
+        if (player.isSpectator()) {
+            return ActionResult.PASS;
+        }
+
+        ItemStack stack = player.getStackInHand(hand);
+        if (stack.isEmpty()) {
+            return ActionResult.PASS;
+        }
+
+        if (strider.getAttachedOrCreate(ScorchAttachmentTypes.STRIDER_HAIR_STATE) && stack.isOf(Items.SHEARS)) {
+            strider.dropItem(serverWorld, Items.STRING);
+
+            strider.setAttached(ScorchAttachmentTypes.STRIDER_HAIR_STATE, false);
+
+            stack.damage(1, player, hand);
+
+            world.playSound(null, strider.getBlockPos(), ScorchSounds.SHEAR_STRIDER, SoundCategory.PLAYERS, 1.0F, 1.0F);
+
+            ScorchCriteria.SHEAR_STRIDER.trigger((ServerPlayerEntity) player);
+            return ActionResult.SUCCESS_SERVER;
+        }
+
+        if (strider.getAttachedOrCreate(ScorchAttachmentTypes.STRIDER_HAIR_STATE) && player.getStackInHand(hand).isOf(Items.MAGMA_CREAM)) {
+            int updatedHairStyle = (strider.getAttachedOrCreate(ScorchAttachmentTypes.STRIDER_HAIR_STYLE) + 1) % 5;
+            strider.setAttached(ScorchAttachmentTypes.STRIDER_HAIR_STYLE, updatedHairStyle);
+
+            stack.decrementUnlessCreative(1, player);
+
+            world.playSound(null, strider.getBlockPos(), ScorchSounds.APPLY_MAGMA, SoundCategory.PLAYERS, 1.0F, 1.0F);
+
+            ScorchCriteria.STYLE_STRIDER.trigger((ServerPlayerEntity) player);
+            return ActionResult.SUCCESS_SERVER;
+        }
+
+        if (!strider.getAttachedOrCreate(ScorchAttachmentTypes.STRIDER_HAIR_STATE) && player.getStackInHand(hand).isOf(Items.WARPED_ROOTS)) {
+            strider.setAttached(ScorchAttachmentTypes.STRIDER_HAIR_GROWTH, strider.getAttachedOrCreate(ScorchAttachmentTypes.STRIDER_HAIR_GROWTH) + 1200);
+
+            stack.decrementUnlessCreative(1, player);
+
+            world.playSound(null, strider.getBlockPos(), SoundEvents.ENTITY_STRIDER_EAT, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            return ActionResult.SUCCESS_SERVER;
+        }
+
+        return ActionResult.PASS;
     }
     
     public static Identifier id(String path) {

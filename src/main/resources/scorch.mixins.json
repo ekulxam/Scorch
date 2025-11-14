@@ -3,15 +3,16 @@
   "package": "astrazoey.scorch.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "AbstractBlockMixin",
-    "AnimalEntityMixin",
-    "BlocksMixin",
-    "CryingObsidianBlockMixin",
     "ItemMixin",
-    "LivingEntityMixin",
     "PlayerCurseMixin",
-    "StriderEntityMixin",
-    "WitherSkeletonEntityMixin"
+    "strider.StriderEntityMixin",
+    "WitherSkeletonEntityMixin",
+    "cryingobsidian.AbstractBlockMixin",
+    "cryingobsidian.BlocksMixin",
+    "cryingobsidian.CryingObsidianBlockMixin",
+    "strider.AnimalEntityMixin",
+    "strider.AttachmentSerializingImplAccessor",
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

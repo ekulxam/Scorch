@@ -1,4 +1,4 @@
-package astrazoey.scorch.mixin;
+package astrazoey.scorch.mixin.cryingobsidian;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.block.AbstractBlock;
