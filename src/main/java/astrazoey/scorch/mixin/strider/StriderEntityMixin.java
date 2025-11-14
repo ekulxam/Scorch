@@ -1,7 +1,6 @@
 package astrazoey.scorch.mixin.strider;
 
 import astrazoey.scorch.strider.StriderHairInterface;
-import astrazoey.scorch.strider.StriderInteractInterface;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.StriderEntity;
@@ -18,7 +17,7 @@ import static astrazoey.scorch.registry.ScorchAttachmentTypes.STRIDER_HAIR_STYLE
 
 @SuppressWarnings("UnstableApiUsage")
 @Mixin(StriderEntity.class)
-public abstract class StriderEntityMixin extends AnimalEntity implements Shearable, StriderHairInterface, StriderInteractInterface {
+public abstract class StriderEntityMixin extends AnimalEntity implements Shearable, StriderHairInterface {
 
     @Shadow
     public abstract boolean isCold();

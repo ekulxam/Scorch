@@ -14,12 +14,12 @@ public class GenericPlayerCriterion extends AbstractCriterion<GenericPlayerCrite
     }
 
     public record Conditions(Optional<LootContextPredicate> playerPredicate) implements AbstractCriterion.Conditions {
-        public static Codec<GenericPlayerCriterion.Conditions> CODEC = LootContextPredicate.CODEC.optionalFieldOf("player")
+        public static final Codec<GenericPlayerCriterion.Conditions> CODEC = LootContextPredicate.CODEC.optionalFieldOf("player")
                 .xmap(Conditions::new, Conditions::player).codec();
 
         @Override
         public Optional<LootContextPredicate> player() {
-            return playerPredicate;
+            return this.playerPredicate;
         }
     }
 
