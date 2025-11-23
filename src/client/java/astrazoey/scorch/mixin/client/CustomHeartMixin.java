@@ -2,6 +2,7 @@ package astrazoey.scorch.mixin.client;
 
 import astrazoey.scorch.ClientCache;
 import astrazoey.scorch.ScorchClient;
+import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -26,7 +27,7 @@ public class CustomHeartMixin {
     }
 
     @Expression("? >= @(0)")
-    @ModifyExpressionValue(method = "renderHealthBar", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = "renderHealthBar", at = @At("MIXINEXTRAS:EXPRESSION"), allow = 1)
     public int skipHeartRender(int original, @Share("penalty")LocalIntRef penalty, @Share("heartsStart") LocalIntRef heartsStart) {
         heartsStart.set(original);
         return original + penalty.get();
